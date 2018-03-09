@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>新闻详情</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+	<div id="news_view">
+		<header>
+			<div class="view_top">
+				新闻详情
+			</div>
+		</header>
+		<div class="view_content">
+			<div class="view_title"></div>
+			<div class="view_createTime"></div>
+			<div class="view_titleImg">
+				<img src="" alt="">
+			</div>
+			<div class="view_text">
+				<p></p>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var id = Helper.getQueryString('id');
+		var vendorid = Helper.getQueryString('vendorid');
+		$.ajax({
+			url: Helper.localhost+'getHtmlPageByIdAndvendorId.json',
+			type:'POST',
+			data: { 'id': id, 'vendorId': vendorid },
+			success: function (res) {
+				var data = res.data;
+				$('.view_text').append(data.text);
+				$('.view_titleImg img').attr('src', data.titleImageUrl);
+				$('.view_title').text(data.title);
+				$('.view_createTime').html(Helper.timeFormat(data.createTime, 'yyyy-MM-dd HH:mm:ss'))
+			}
+		})
+	})
+
+</script>
+
+</html>

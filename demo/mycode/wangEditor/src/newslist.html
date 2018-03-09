@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>list</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<body>
+	<div id="news_listview">
+		<header>
+			<div>
+				<div class="news_release" data-release="create">
+					发布新闻
+				</div>
+			</div>
+		</header>
+		<div class="news_content">
+			<div class="news_list">
+				<ul>
+				</ul>
+			</div>
+		</div>
+		<div style="margin:0 auto;width:500px;">
+			<div class="lastPage">上一页</div>
+		<div class="footerPage">
+				<ul>
+				</ul>
+		</div>
+		<div class="nextPage">下一页</div>
+		</div>
+	</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var noimg = '';
+		// var j = 1;
+		var page = 1;
+		var mathPage = '';
+		$.ajax({
+			url: Helper.localhost+'getHtmlPageList.json',
+			// type:'POST',
+			data: { 'vendorId': 161, 'page':3,'num': 20 },
+			success: function (res) {
+				//按时间排序
+				res.data.sort(Helper.sortArry);
+				$('.news_list ul').html('');
+				for (var i = 0; i < res.data.length; i++) {
+					var data = res.data[i];
+					if (!data.titleImageUrl) {
+						$($('.news_img img')[i]).hide();
+						noimg = '<span style="color:#999">暂无图片</span>'
+					} else {
+						$($('.news_img img')[i]).show();
+						noimg = '<img src="' + data.titleImageUrl + '">'
+					}
+					data.text = Helper.delHtmlTag(data.text);
+					getData(data, '.news_list ul');
+				}
+				mathPage = Math.ceil(res.msg/20);
+				
+				for (var k = 1; k <= mathPage;k++){
+					var pageNm = '<li>'+k+'</li>'
+					$('.footerPage ul').append(pageNm)
+				}
+					$('.footerPage ul li').eq(0).addClass('page_activ')
+			}
+		})
+
+		function getDataHtml(n,p,k){
+			if(n){
+				page = n
+			}else{
+					if(page>=p){
+					return false
+				}else{
+					if(k){
+						page++
+					}else{
+						page--
+					}
+				}
+ 			}
+			if(page>1){
+				$('.lastPage').show()
+			}else{
+				$('.lastPage').hide()
+			}
+			$('.footerPage ul li').eq(page-1).addClass('page_activ').siblings('li').removeClass('page_activ')
+			if(mathPage>10){
+					var listLeft = $('.page_activ').parents('ul').offset().left
+					if($('.page_activ').index()>5&&$('.page_activ').index()<$('.page_activ').parents('ul').find('li').length-5){
+						$('.page_activ').parents('ul').css({
+							'left':-(($('.page_activ').offset().left)-listLeft-5*24)
+						})
+					}else if($('.page_activ').index()<5){
+								$('.page_activ').parents('ul').css({
+								'left':0
+							})
+					}
+				}
+			$.ajax({
+			url: Helper.localhost+'getHtmlPageList.json',
+			// type:'POST',
+			data: { 'vendorId': 161, 'page': page, 'num': 20 },
+			success: function (res) {
+				if(page<=p){
+					$('.news_list ul').html('');
+				}
+				//按时间排序
+				res.data.sort(Helper.sortArry);
+					for (var i = 0; i < res.data.length; i++) {
+						var data = res.data[i];
+						if (!data.titleImageUrl) {
+							$($('.news_img img')[i]).hide();
+							noimg = '<span style="color:#999">暂无图片</span>'
+						} else {
+							$($('.news_img img')[i]).show();
+							noimg = '<img src="' + data.titleImageUrl + '">'
+						}
+						data.text = Helper.delHtmlTag(data.text);
+						getData(data, '.news_list ul');
+
+					}
+				}
+			})
+		}
+		//单击页码
+		$(document).on('click','.footerPage ul li',function(){
+			var pagNm = Number($(this).text())
+			getDataHtml(pagNm,mathPage,'');
+			$(document).scrollTop(0);
+		})
+		var direction = true;
+		//下一页
+		$('.nextPage').click(function(){
+			direction = true;
+			getDataHtml('',mathPage,direction);
+			$(document).scrollTop(0);
+		})
+		$('.lastPage').click(function(){
+			direction = false;
+			getDataHtml('',mathPage,direction);
+			$(document).scrollTop(0);
+		})
+		// 上一页
+		function getData(data,nodeId){
+			var listTemplat = '<li data-id='+data.id+' data-vendorid='+data.vendorId+'>\
+					<div class="news_img_box"><div class="news_img">'+noimg+'</div></div>\
+					<div class="news_textContent">\
+						<h5 class="news_title">'+ data.title + '</h5>\
+						<div class="news_text">'+ data.text + '\
+						</div>\
+					</div>\
+					<div class="news_bt">\
+						<div class="news_edt public_button" data-release="edit" >修改</div>\
+						<div class="news_clear public_button">删除</div>\
+						<div class="news_view public_button">查看</div>\
+						<div>'+ Helper.timeFormat(data.createTime) + '</div>\
+					</div>\
+				</li>'
+
+			$(nodeId).append(listTemplat)
+		}
+		//编辑
+		$(document).on('click', '.news_edt', function () {
+			window.open('edit.html?id=' + $(this).parents('li').data('id') + '&vendorId=' + $(this).parents('li').data('vendorid') + '&releaseData=' + $(this).data('release'))
+		});
+		//发布
+		$('.news_release').click(function () {
+			window.open('edit.html?releaseData=' + $(this).data('release'))
+		})
+		//删除
+		$(document).on('click','.news_clear',function(){
+					var $that = $(this)
+					Helper.$lay1('删除过后将不可恢复，您确定删除吗？',function(){
+						$that.parents('li').remove()
+						$.ajax({
+							url:Helper.localhost+'deleteHtmlPage.json',
+							type:'POST',
+							data:{'id':$that.parents('li').data('id')},
+							success:function(res){
+								Helper.$lay('删除成功')
+							}
+						})
+			 		})
+			})
+		//查看
+		$(document).on('click', '.news_view', function () {
+			open('newsView.html?id=' + $(this).parents('li').data('id') + '&vendorid=' + $(this).parents('li').data('vendorid'))
+		})
+
+		
+
+	})
+
+</script>
+
+</html>

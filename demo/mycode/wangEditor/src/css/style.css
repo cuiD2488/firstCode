@@ -1,0 +1,334 @@
+body,html{
+		margin:0;
+		padding:0;
+	}
+	.public_clear:after{
+		content:'\20';
+		display:block;
+		height:0;
+		clear:both;
+		visibility:hidden;
+	}
+	.public_button{
+		/*float: right;*/
+	    background-color: #fff;
+	    border: 1px solid #999;
+	    border-radius: 4px;
+	    color: #999;
+	    width: 82px;
+	    height: 32px;
+	    line-height: 32px;
+	    text-align: center;
+	    margin: 13px 0;
+	    cursor: pointer;
+	}
+	.public_lay{
+		width: 200px;
+	    height: 50px;
+	    border: 1px solid #ddd;
+	    position: fixed;
+	    top: -100px;
+	    left: 50%;
+	    margin-left: -100px;
+	    background: rgba(0, 0, 0, 0.64);
+	    text-align: center;
+	    line-height: 50px;
+	    z-index: 999;
+	    color: #fff;
+	}
+	.public_lay1{
+		width: 300px;
+		height: 150px;
+		border: 1px solid #ddd;
+		position: fixed;
+		top: -200px;
+		left: 50%;
+		margin-left: -100px;
+		background: rgba(0, 0, 0, 0.64);
+		text-align: center;
+		line-height: 50px;
+		z-index: 999;
+		color: #fff;
+	}
+	.lay_text{
+		width:100%;
+		height:100px;
+		text-align:center;
+	}
+	.lay_bt{
+	    cursor: pointer;
+	    width: 40px;
+	    height: 20px;
+	    line-height: 20px;
+	    text-align: center;
+	    background: #000;
+	    border: 1px solid #eee;
+	    float: left;
+	    margin-left: 22%;
+	    bottom: 10px;
+	    border-radius: 4px;
+	}
+	.lay_body{
+		position:fixed;
+		z-index:998;
+		width:100%;
+		height:100%;
+		top:0;
+	}
+	 header{
+		background-color: rgba(255, 255, 255, 0.93);
+		width: 100%;
+		border-bottom: 1px solid rgba(0, 0, 0, .08);
+		height: 60px;
+		line-height: 60px;
+		position: fixed;
+		top: 0;
+		z-index: 3;
+	}
+	#wang_text .w-e-text{
+		overflow-y:hidden ;
+	}
+	#wang_text .w-e-text>p{
+    	text-indent: 2em;
+	}
+	/*z*/
+	.wang_content{
+		margin:0 auto;
+		margin-top:60px;
+		width:700px;
+		padding-top:30px;
+	}
+	#wangED header>div,#news_listview header>div{
+		width:700px;
+		margin:0 auto;
+		overflow:hidden;
+	}
+	#wangED header>div>div{
+		float:left;
+		height:100%;
+		line-height: 60px;
+	}
+	#wangED header .wang_release,#wangED header .wang_clear,.news_release{
+		float: right;
+	    background-color: #fff;
+	    border: 1px solid #999;
+	    border-radius: 4px;
+	    color: #999;
+	    width: 82px;
+	    height: 32px;
+	    line-height: 32px;
+	    text-align: center;
+	    margin: 13px 0;
+	    cursor: pointer;
+	}
+	#wangED header .wang_clear{
+		margin:13px auto;
+	}
+	#wang_toolbar{
+		position: relative;
+	    top: 0;
+	    background: rgb(255, 255, 255);
+	    z-index: 99999;
+	    width: 100%;
+	}
+	.wang_clear{
+
+	}
+	.wang_content .wang_headline{
+	margin: 0 auto;
+    height: 44px;
+    min-height: 44px;
+    display: block;
+    width: 700px;
+    border: 0;
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 700;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+	}
+	/*---新闻---*/
+	.news_content{
+		width:1100px;
+		margin:0 auto;
+		margin-top:60px;
+	}
+	.news_content .news_list>ul>li{
+		padding:20px;
+		overflow:hidden;
+	}
+	.news_content .news_list .news_textContent{
+		float:left;
+		width: 600px;
+	    border: 1px solid #ddd;
+	   	min-height: 160px;
+	    padding: 10px;
+		box-sizing: border-box;
+	}
+	.news_content .news_list .news_bt{
+		float:right;
+		width:100px;
+		padding-left: 40px;
+	}
+	.news_title{
+		font-size:18px;
+		margin:0;
+		text-align:center;
+	}
+	.news_text{
+		text-indent:2em;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		display:-webkit-box;
+		-webkit-line-clamp:5;
+		-webkit-box-orient:vertical;
+		margin:0;
+	}
+	.news_img{
+	    height: 100%;
+	    width: 100%;
+	    float: left;
+	    box-sizing: border-box;
+	    overflow: hidden;
+	    position:relative;
+	}
+	.news_img_box{
+		padding: 10px;
+	    border: 1px solid #ddd;
+	    overflow: hidden;
+	    float: left;
+	    height: 160px;
+	    width: 200px;
+	    box-sizing: border-box;
+	    margin-right: 20px;
+	}
+	.news_img>img{
+		display:inline-block;
+		height:100%;
+		position: absolute;
+		left: 50%;
+		transform:translateX(-50%);
+	}
+	.ang_titleImg{
+		border:1px solid #ddd;
+		width:100%;
+		background-color: #f7f8f9;
+		position:relative;
+		min-height:200px;
+		background-image:url('../../asst/img/addImg.png');
+	}
+	.ang_titleImg>form{
+		width:100%;
+		height:100%;
+	}
+	.ang_titleImg>form>input{
+		position: absolute;
+	    display: block;
+	    top: 0;
+	    left: 0;
+	    height: 100%;
+	    width: 100%;
+	    opacity: 0; 
+	    cursor: pointer;
+	    z-index: 2;
+	}
+	#updtImg{
+		width:100%;
+		height:100%;
+		display:none;
+	}
+/*新闻详情*/
+	#news_view .view_content{
+		width:900px;
+		margin:0 auto;
+		margin-top:61px;
+	}
+	.view_top{
+		width:700px;
+		margin:0 auto;
+		color:#999;
+	}
+	.view_titleImg{
+		text-align:center;
+	}
+	.view_titleImg img{
+		width:50%;
+	}
+	.view_title{
+		text-align: center;
+	    font-size: 24px;
+	    padding: 10px;
+	}
+	.view_text p{
+		text-indent:2em;
+	}
+	.view_createTime{
+		width: 50;
+	    margin: 0 auto;
+	    font-size: 12px;
+	    height: 30px;
+	    border-bottom: 1px solid #ddd;
+	    margin-bottom: 15px;
+	}
+	.wang_dealImg{
+		position: absolute;
+	    right: 0;
+	    bottom: 0;
+	    border: 1px solid #ddd;
+	    padding: 5px 10px;
+	    background-color: rgba(29, 29, 29, 0.52);
+	    z-index: 2;
+	    cursor: pointer;
+	    color: #fff;
+	    border-radius: 6px;
+	    display:none;
+	}
+	.wang_dealImg:hover{
+		background-color:rgba(0, 0, 0, .75);
+	}
+
+	.footerPage{
+		overflow: hidden;
+		width:900px;
+		margin:0 auto;
+		margin-bottom:100px;
+		width:264px;
+		float:left;
+	}
+	.footerPage>ul{
+	    list-style: none;
+	    overflow: hidden;
+	    float: left;
+	    margin: 0;
+	    padding: 0;
+	    position:relative;
+	    width:10000px;
+	}
+
+	.footerPage>ul>li{
+	    border: 1px solid #ddd;
+	    float: left;
+	    width: 20px;
+	    text-align: center;
+	    color: #999;
+	    cursor:pointer;
+	    margin-right:2px;
+	    position:relative;
+	}
+	.nextPage,.lastPage{
+		border: 1px solid #ddd;
+	    float: left;
+	    text-align: center;
+	    color: #999;
+	    cursor:pointer;
+	    margin-right:2px;
+	}
+	.lastPage{
+		display:none;
+	}
+	.page_activ{
+	    background: rgba(124, 228, 210, 0.25);
+    	border-color: #8c7d79;
+
+	}

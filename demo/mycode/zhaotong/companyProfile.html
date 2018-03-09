@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>公司简介</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/js/swiper.min.js"></script>
+</head>
+<body>
+	<div id="cp_header"></div>
+	<div class="cp_section">
+		<div class="cp_section_left">
+			<div class="cp_left"></div>
+		</div>
+		<div class="cp_section_right"></div>
+	</div>
+</body>
+<script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#cp_header").load("common/header.html",function(){
+	    	var swiper = new Swiper('.zt_header',{
+		       // spaceBetween: 30,
+		       	speed:300,
+		        effect: 'fade',
+		        loop:true,
+		        autoplay:3000
+    		})
+		});
+		
+	})
+</script>
+</html>

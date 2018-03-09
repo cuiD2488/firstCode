@@ -1,0 +1,9 @@
+/*各种高宽值的修改--技巧：减小或增大同一数值*/
+.stepcarousel { WIDTH:1036px; HEIGHT: 343px; }
+.stepcarousel .panel { WIDTH:998px; HEIGHT:343px; overflow:hidden;}
+/*各种高宽值的修改结束*/
+#slider {MARGIN: 0px; OVERFLOW: hidden;POSITION: relative; HEIGHT: 343px }
+.stepcarousel { OVERFLOW: scroll; POSITION: relative; }
+.stepcarousel .belt { LEFT: 0px; POSITION: absolute; TOP: 0px }
+.stepcarousel .panel { FLOAT: left; MARGIN: 10px 20px; OVERFLOW: hidden; }
+

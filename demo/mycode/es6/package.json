@@ -1,0 +1,8 @@
+{
+	"devDependencies":{
+		"dabel-cli":"^6.26.0"
+	},
+	"scripts":{
+		"build":"babel src -d lib"
+	}
+}

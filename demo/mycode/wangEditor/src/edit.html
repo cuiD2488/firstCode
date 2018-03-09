@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>富文本编辑器</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<body>
+	<div id="wangED">
+		<header>
+			<div>
+				<div>
+					<strong>编辑</strong>
+				</div>
+				<div class="wang_release">
+					保存
+				</div>
+				<div class="wang_clear">清空内容</div>
+			</div>
+		</header>
+		<div class="wang_content">
+			<div class="ang_titleImg">
+				<form id="picForm" action="/addPictures.json">
+					<input type="file" id="fileupload" name="image" enctype="multipart/form-data" accept="image/gif,image/jpeg" onchange='updataImg($(this.files[0]))'
+					 accept="">
+					<img id="updtImg" src="">
+				</form>
+				<div class="wang_dealImg">删除</div>
+			</div>
+			<textarea rows="1" class="wang_headline" placeholder="请输入标题"></textarea>
+			<div id="wang_toolbar" class="toolbar"></div>
+			<div id="wang_text" class="text"></div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="https://unpkg.com/wangeditor@3.0.9/release/wangEditor.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript">
+//图片上传
+        var updataImg = function(){
+        	alert()
+        	var form = new FormData($('#picForm')[0])
+        	$.ajax({
+			  url: Helper.localhost+'addPictures.json',
+			  type: "POST",
+			  data: form,
+			  processData: false,  // 不处理数据
+			  contentType: false,   // 不设置内容类型
+			  success: function (res) {
+			  	$('#updtImg').attr('src','http://'+res.imgPath).attr('src','http://'+res.imgPath).show();
+			  	$('.ang_titleImg').css('background-image','url()')
+			  },
+			  error:function(){
+			  	 Helper.$lay('图片过大请重新上传');
+			  }
+			});
+        }
+
+	$(function () {
+		var E = window.wangEditor;
+		var editor1 = new E('#wang_toolbar', '#wang_text');
+		var toolbarTop1 = $('#wang_toolbar').offset().top;
+		var releaseData = Helper.getQueryString('releaseData');
+		var id = Helper.getQueryString('id');
+		var vendorId = Helper.getQueryString('vendorId');
+		editor1.customConfig.uploadImgShowBase64 = true
+		editor1.create();
+
+		if (releaseData == 'edit') {
+			$('.wang_release').html('保存')
+		} else if (releaseData == 'create') {
+			$('.wang_release').html('发布')
+		}
+		//若为修改，渲染已填信息
+		if (releaseData == 'edit') {
+			$.ajax({
+				url: Helper.localhost+'getHtmlPageByIdAndvendorId.json',
+				type:'POST',
+				data: { 'id': id, 'vendorId': vendorId },
+				success: function (res) {
+					var data = res.data;
+					editor1.txt.html(data.text)
+					if (data.titleImageUrl) {
+						$('#updtImg').attr('src', data.titleImageUrl).show();
+					}
+					$('.wang_headline').text(data.title);
+				}
+			})
+		}
+		$('.ang_titleImg').mouseenter(function () {
+			if ($('#updtImg').attr('src') != '') {
+				$('.wang_dealImg').show(200)
+			}
+		})
+
+		$('.ang_titleImg').mouseleave(function () {
+			$('.wang_dealImg').hide(200)
+		})
+
+       	//删除标题图片
+       	$('.wang_dealImg').click(function(){
+			   $('#updtImg').attr('src','').hide();
+			   $('.ang_titleImg').css('background-image','url(../../asst/img/addImg.png)')
+			   $('#fileupload').val('');
+       	})
+        //清空
+        $('.wang_clear').click(function(){
+        		editor1.txt.clear();
+        		$('.wang_dealImg').click();
+        		$('.wang_headline').text('');
+        		$('.ang_titleImg').css('background-image','url(../../asst/img/addImg.png)');
+        		$('#fileupload').val('');
+        })
+
+        //富文本工具栏吸顶
+        $(window).scroll(function(){
+        	 if($(document).scrollTop()>toolbarTop1+$('.ang_titleImg').height()-$('header').height()-200){
+        	 	$('#wang_toolbar').css({
+        	 		'position':'fixed',
+        	 		'top':'61px'
+        	 	})
+        	 }else if($(document).scrollTop()<=toolbarTop1+$('.ang_titleImg').height()-$('header').height()-200){
+        	 	$('#wang_toolbar').css({
+        	 		'position':'relative',
+        	 		'top':'0'
+        	 	})
+        	 }
+        });
+       
+        //发布
+        $('.wang_release').click(function(){
+			var dataHtml = editor1.txt.html();
+			var dataTitle = $('.wang_headline').val();
+			if (releaseData == 'edit') {
+				//修改
+				$.ajax({
+					url: Helper.localhost+'updateHtmlPage.json',
+					// type: 'post',
+					data: { 'id': id, 'vendorId': vendorId, 'text': dataHtml, 'title': dataTitle, 'titleImageUrl': $('#updtImg').attr('src') },
+					success: function (res) {
+						window.location = "newslist.html"
+					}
+				});
+			} else if (releaseData == 'create') {
+				//创建
+				$.ajax({
+					url: Helper.localhost+'insertHtmlPage.json',
+					// type: 'POST',
+					data: { 'vendorId': 161, 'text': dataHtml, 'title': dataTitle, 'titleImageUrl': $('#updtImg').attr('src') },
+					success: function (res) {
+						window.location = "newslist.html"
+					}
+				})
+			}
+		})
+
+		//为每一个textarea绑定事件使其高度自适应
+		$.each($("textarea"), function (i, n) {
+			Helper.autoTextarea($(n)[0]);
+		});
+	})
+
+</script>
+</body>
+
+</html>
+</script>
+
+</html>
